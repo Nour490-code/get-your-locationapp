@@ -1,0 +1,22 @@
+{
+  "name": "data-selfie-app",
+  "version": "1.0.0",
+  "description": "This is a data selife app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Selfie",
+    "API",
+    "Server"
+  ],
+  "author": "Noureldin Ghazy",
+  "license": "MIT",
+  "dependencies": {
+    "csv-writer": "^1.6.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "nedb": "^1.8.0"
+  }
+}

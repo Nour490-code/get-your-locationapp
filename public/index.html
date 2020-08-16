@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style-index.css">
+    <title>Get Location App</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Where Am I?</h1>
+        <p>
+            <h5 id="err"></h5>
+           <span class="coords"> Latitude:</span> <span id="lat"></span>&deg; <br />
+           <span class="coords"> Longtitude:</span> <span id="lon"></span>&deg;
+        </p>
+        <form id="form">
+            <label>Name</label>
+            <input type="text" id="name">
+            <div class="btns">
+                <button type="submit" id="btn">Save Data</button>
+                <a href="http://localhost:8000/logs.html" target="_blank">See All Data</a>
+            </div>
+        </form>
+    </div>
+    <script>
+        if ('geolocation' in navigator){
+            console.log('geolocation available');
+
+            document.getElementById('form').addEventListener('submit', e => {
+                e.preventDefault();
+                let name = document.getElementById('name');  
+                const errMsg = document.getElementById('err');
+                if(name.value == ''){
+                    errMsg.textContent = 'Please enter your name';
+                    errMsg.style.color = '#BB2124';
+                }else{
+                    errMsg.textContent = 'Data Saved';
+                    errMsg.style.color = '#22BB33';
+                    navigator.geolocation.getCurrentPosition( async position => {
+                        const lat = position.coords.latitude;
+                        const lon = position.coords.longitude;
+                        name = name.value;
+                        document.getElementById('lat').textContent = lat; 
+                        document.getElementById('lon').textContent = lon;
+                        const data = { name,lat,lon };
+                        const options = {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(data)
+                        };
+
+                        const response = await fetch('/api', options);
+                        const json = await response.json();
+                        console.log(json);
+                    });
+                }
+            });
+        }else{
+            console.log('geolocation not available')
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Info</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body{
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #ffffff;
+        }
+        .container{
+            width: 90%;
+            margin-left: 3rem;
+            padding: 5rem;
+            border-radius: 1rem;
+        }
+        .user-box{
+            background-color: #f8f8f8;
+            margin-top: 2rem;
+            padding: 1rem;
+            border-radius: 0.4rem;
+        }
+        span{
+            margin-left: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Users</h1>
+    </div>
+    <script>
+        getData()
+        async function getData(){
+            const response = await fetch('/api'); 
+            const data = await response.json();
+            console.log(data);
+            data.forEach(user => {
+                const userArray = [];
+                const userBox = document.createElement('div');
+                userArray.push(userBox);
+                userArray.forEach( person => person.classList.add('user-box'))
+                const container = document.getElementsByClassName('container')[0];
+                container.append(userBox);
+                const userName = document.createElement('span');
+                userName.style.marginLeft = '1rem'
+                userName.textContent = `Name: ${user.name} `;
+                const lat = document.createElement('span');
+                lat.textContent = `Latitude: ${user.lat}`;
+                const lon = document.createElement('span');
+                lon.textContent = `Longtitude: ${user.lon} `
+                userBox.append(userName, lat,lon);
+                console.log(userArray)
+            });
+        }
+    </script>
+</body>
+</html>
